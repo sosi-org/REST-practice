@@ -14,3 +14,7 @@ curl 127.0.0.1:5000/acc/api/v1.0/invoices
 curl 127.0.0.1:5000/acc/api/v1.0/invoices/123
 #non standard: plural
 
+
+
+# causes error:
+curl -i -H "Content-Type: application/json" -X POST -d '{"iid":12}' http://localhost:5000/acc/api/v1.0/invoices

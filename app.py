@@ -3,6 +3,7 @@ from flask import Flask
 
 from flask import jsonify
 from flask import abort
+from flask import request
 
 
 app = Flask(__name__)
@@ -99,12 +100,24 @@ empty: return 404.
 
 
 def invoice_consistency(iv):
-    if iv['amount'] is None:
+    amount = iv['amount']
+    if amount is None:
         return False
-    if iv['who'] is None:
+    if int(amount) != amount:
         return False
-    if iv['iid'] is None:
+
+    who = iv['who']
+    if who is None:
         return False
+
+    iid = iv['iid']
+    if iid is None:
+        return False
+    if int(amount) != amount:
+        return False
+    if amount <=0 :
+        return False
+
     return True
 
 def total_consistency():
@@ -155,13 +168,48 @@ def invoices_retrieve(invoice_iid):
     # The requested URL was not found on the server.  
 
 
+##########
+import datetime
+###########
+
+@app.route('/acc/api/v1.0/invoices/', methods=['POST'])
+def new_invoice():
+    ###################
+    # `request` first used. Terrible design.
+    ###################
+    if not request.json or not 'iid' in request.json or not 'amount' in request.json or not 'who' in request.json:
+        abort(400)
+    new_invoice = {
+        ######################
+        # request.json['field'],
+        ########################
+        'iid': request.json['iid'],
+        'who': request.json['who'],
+        'amount': request.json['amount'],
+
+        #more info here
+        'timestamp': datetime.now(),
+    }
+
+    if not check_consistency(new_invoice):
+        abort(400)  # invalid
+
+    invoices.append(new_invoice)
+
+    #############
+    # Not directly returned.
+    # REST is messy. (A bit open-design: the protocol and conventions are kept. Such as the endpoint having the same name. Returning wrapped. etc.)
+    #############
+    return {'invoice': new_invoice}, 201  # AHA
+
+"""
+201 is:
+HTTP defines 201 as the code for "Created".
+"""
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
 
-
-"""
-Examples:
-127.0.0.1:5000/acc/api/v1.0/invoices
-
-"""
