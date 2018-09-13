@@ -172,7 +172,13 @@ def invoices_retrieve(invoice_iid):
 import datetime
 ###########
 
-@app.route('/acc/api/v1.0/invoices/', methods=['POST'])
+"""
+The URL was defined with a trailing slash so Flask will automatically redirect to the URL with the trailing slash if it was accessed without one.  Make sure to directly send your POST-request to this URL since we can\'t make browsers or HTTP clients redirect with form data reliably or without user interaction.\n\nNote: this exception is only raised in debug mode'<
+'/acc/api/v1.0/invoices/'
+->
+'/acc/api/v1.0/invoices'
+"""
+@app.route('/acc/api/v1.0/invoices', methods=['POST'])
 def new_invoice():
     ###################
     # `request` first used. Terrible design.
@@ -188,10 +194,10 @@ def new_invoice():
         'amount': request.json['amount'],
 
         #more info here
-        'timestamp': datetime.now(),
+        'timestamp': datetime.datetime.now(),
     }
 
-    if not check_consistency(new_invoice):
+    if not invoice_consistency(new_invoice):
         abort(400)  # invalid
 
     invoices.append(new_invoice)
@@ -200,7 +206,9 @@ def new_invoice():
     # Not directly returned.
     # REST is messy. (A bit open-design: the protocol and conventions are kept. Such as the endpoint having the same name. Returning wrapped. etc.)
     #############
-    return {'invoice': new_invoice}, 201  # AHA
+    #return {'invoice': new_invoice}, 201  # AHA
+    #       forgot jsonify
+    return jsonify({'invoice': new_invoice}), 201  # AHA
 
 """
 201 is:

@@ -18,3 +18,13 @@ curl 127.0.0.1:5000/acc/api/v1.0/invoices/123
 
 # causes error:
 curl -i -H "Content-Type: application/json" -X POST -d '{"iid":12}' http://localhost:5000/acc/api/v1.0/invoices
+
+
+#should show error 400. Invalid invoice.
+curl -i -H "Content-Type: application/json" -X POST -d '{"iid":"12"}' http://localhost:5000/acc/api/v1.0/invoices
+
+curl -i -H "Content-Type: application/json" -X POST -d '{"iid":"12", "who":4, "amount":33}' http://localhost:5000/acc/api/v1.0/invoices
+
+# Why -H, -x, -d. All have to be there. (includeing -i?)
+
+curl 127.0.0.1:5000/acc/api/v1.0/invoices
