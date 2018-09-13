@@ -114,6 +114,10 @@ def invoices_listall():
     """
     Dumps all `invoices`
     """
+    invoices=[]
+    if len(invoices) == 0:
+        # incorrect usage
+        abort(404)  # The requested URL was not found on the server.  
     return jsonify({'invoices': invoices})
 
 
