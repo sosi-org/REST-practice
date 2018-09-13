@@ -139,7 +139,7 @@ def invoices_listall():
     return jsonify({'invoices': invoices})
 
 
-@app.route('/acc/api/v1.0/invoice/<int:invoice_iid>', methods=['GET'])
+@app.route('/acc/api/v1.0/invoices/<int:invoice_iid>', methods=['GET'])
 def invoices_retrieve(invoice_iid):
     """
     """

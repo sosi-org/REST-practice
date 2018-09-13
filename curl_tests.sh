@@ -11,6 +11,6 @@ curl 127.0.0.1:5000/acc/api/v1.0/invoices
 
 
 #curl 127.0.0.1:5000/acc/api/v1.0/invoices/123
-curl 127.0.0.1:5000/acc/api/v1.0/invoice/123
+curl 127.0.0.1:5000/acc/api/v1.0/invoices/123
 #non standard: plural
 
