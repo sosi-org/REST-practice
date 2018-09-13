@@ -124,6 +124,7 @@ def total_consistency():
     for iv in invoices:
         if not invoice_consistency(iv):
             return False
+    # TODO: check unique iid (or strictly increasing)
     return True
 """
 Private. For test purposes only
@@ -161,7 +162,7 @@ def invoices_retrieve(invoice_iid):
         abort(400)
 
     for iv in invoices:
-        print("iv['iid']: ", iv['iid'])
+        #print("iv['iid']: ", iv['iid'])
         if iv['iid'] == invoice_iid:
             return jsonify(iv)
     abort(404)  # does not give more info
@@ -183,18 +184,32 @@ def new_invoice():
     ###################
     # `request` first used. Terrible design.
     ###################
-    if not request.json or not 'iid' in request.json or not 'amount' in request.json or not 'who' in request.json:
+    if not request.json:
         abort(400)
+
+    if not 'amount' in request.json or not 'who' in request.json:
+        abort(400)
+
+    # increment primary key
+    #new_iid = len(invoices)+1-1
+    new_iid = invoices[-1]['iid'] + 1
+
+    new_who = request.json['who']
+    new_amount = request.json['amount']
+
+    #if new_who is None:  # never happens
+
     new_invoice = {
         ######################
         # request.json['field'],
         ########################
-        'iid': request.json['iid'],
-        'who': request.json['who'],
-        'amount': request.json['amount'],
+        'iid': new_iid,
+        'who': new_who,
+        'amount': new_amount,
 
         #more info here
         'timestamp': datetime.datetime.now(),
+        #TODO: client info (useful for identificaion and binding to uid) from http request
     }
 
     if not invoice_consistency(new_invoice):
