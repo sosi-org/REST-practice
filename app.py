@@ -97,6 +97,11 @@ def invoice_consistency(iv):
         return False
     return True
 
+def total_consistency():
+    for iv in invoices:
+        if not invoice_consistency(iv):
+            return False
+    return True
 """
 Private. For test purposes only
 """
@@ -114,11 +119,31 @@ def invoices_listall():
     """
     Dumps all `invoices`
     """
-    invoices=[]
-    if len(invoices) == 0:
-        # incorrect usage
-        abort(404)  # The requested URL was not found on the server.  
+    
+    #invoices=[]
+    #if len(invoices) == 0:
+    #    # incorrect usage
+    #    abort(404)  # The requested URL was not found on the server.  
+    #    FIXME
+
     return jsonify({'invoices': invoices})
+
+
+@app.route('/acc/api/v1.0/invoice/<int:invoice_iid>', methods=['GET'])
+def invoices_retrieve(invoice_iid):
+    """
+    """
+
+    if not total_consistency():
+        abort(400)
+
+    for iv in invoices:
+        print("iv['iid']: ", iv['iid'])
+        if iv['iid'] == invoice_iid:
+            return jsonify(iv)
+    abort(404)  # does not give more info
+    # The requested URL was not found on the server.  
+
 
 
 if __name__ == '__main__':
