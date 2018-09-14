@@ -320,10 +320,16 @@ CRUD.
 etc.
 (to test is against a standard way? Can we just feed it and it cheks if it is CRUD? It would be nice to do so in C++.)
 """
+
 """
 TODO:
 @app.route('/acc/api/v1.0/invoices/<int:task_id>', methods=['PUT'])
 app.route('/acc/api/v1.0/invoices/<int:task_id>', methods=['DELETE'])
+
+authentication / login_necessary
+
+What is WGSI? Why recommended?
+What makes it production?
 """
 
 if __name__ == '__main__':
