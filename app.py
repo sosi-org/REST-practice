@@ -275,13 +275,41 @@ def new_invoice():
     #       forgot jsonify
     return jsonify({'invoice': new_invoice}), 201  # AHA
 
+
+"""
+TODO: More rigorous validation tests:
+        type(request.json['title']) != unicode
+        type(request.json['done']) is not bool
+        proper numerical tests: Testin None is wrong.
+        no None.
+        A series of tests on "request" before the tests on obj. (Then, tests on the whole thing. Then on the "accumulation" object.)
+
+        what about type check and nitty gritty of "<int:>" field of GET, etc?
+
+
+
+Wny do we test "if not request.json" ?
+Return a reson for everything.
+"""
+
+"""
+Tests: good for forcing unificatin (Externall). reminds me of design of linux.
+
+Why this will become a RESOURCE? anew qualia? (in CS). (qualias, patterns, Concepts(C++14), etc)
+(Will have a/that Qualia. BUt for a reason outsied it. Each of them happns to follow the standard. Like immitating object oriwented without the checks.)
+A tour of possiblities: tour of interviews.
+"""
+
 """
 201 is:
 HTTP defines 201 as the code for "Created".
 """
 
-
-
+"""
+TODO:
+@app.route('/acc/api/v1.0/invoices/<int:task_id>', methods=['PUT'])
+app.route('/acc/api/v1.0/invoices/<int:task_id>', methods=['DELETE'])
+"""
 
 if __name__ == '__main__':
     app.run(debug=True)
