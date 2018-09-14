@@ -28,6 +28,7 @@ def not_found(error):
 ###################################################################
 
 #db:
+# master list
 invoices = [
     {'amount': 12, 'who': 1, 'extra': "extra information", 'iid':2},
     {'amount': 24, 'who': 2, 'iid': 123},
@@ -100,32 +101,45 @@ empty: return 404.
 
 
 def invoice_consistency(iv):
+    """ returns (bool,reason"""
     amount = iv['amount']
     if amount is None:
-        return False
+        return False, "no `Amount` key"
+
     if int(amount) != amount:
-        return False
+        return False, "`Amount` must be int"
 
     who = iv['who']
     if who is None:
-        return False
+        return False, "no `Who` key"
 
     iid = iv['iid']
     if iid is None:
-        return False
-    if int(amount) != amount:
-        return False
-    if amount <=0 :
-        return False
+        return False, "no `iid` key"
 
-    return True
+    if float(amount) != amount:
+        return False, "`amount` nees to be float"
+
+    if amount <=0 :
+        return False, "`amount` needs to be numerical"
+
+    return True, ""
 
 def total_consistency():
+    """ Returns (bool, reason) """
+    last_iv = None
     for iv in invoices:
-        if not invoice_consistency(iv):
-            return False
+        conssnt, reasonnot = invoice_consistency(iv)
+        if not conssnt:
+            return False, "inconsisnency:"+reasonnot
+
+        if last_iv is not None:
+            if not last_iv['iid'] < iv['iid']:
+                return False, "strictly increaing primary key"
+
+        last_iv = iv
     # TODO: check unique iid (or strictly increasing)
-    return True
+    return True, ""
 """
 Private. For test purposes only
 """
@@ -212,7 +226,9 @@ def new_invoice():
         #TODO: client info (useful for identificaion and binding to uid) from http request
     }
 
-    if not invoice_consistency(new_invoice):
+    i,reason = invoice_consistency(new_invoice)
+    if not i:
+        #TODO: show the reason
         abort(400)  # invalid
 
     invoices.append(new_invoice)
