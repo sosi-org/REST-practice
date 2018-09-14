@@ -100,28 +100,57 @@ empty: return 404.
 """
 
 
+def represents_int(int_like):
+    # is_int_like
+    try:
+        int(int_like)
+        return True
+    except ValueError:
+        return False
+
+def represents_float(number):
+    try:
+        float(number)
+        return True
+    except ValueError:
+        return False
+
+
+def is_int(int_like):
+    if represents_int(int_like) and int(int_like) == int_like:
+        return True
+    return False
+
+def is_amount(number_like):
+    # TODO: check aomount has 2 decimal points only.
+    if represents_float(number_like) and intfloat(number_like) == number_like:
+        return True
+    return False
+
 def invoice_consistency(iv):
     """ returns (bool,reason"""
     amount = iv['amount']
     if amount is None:
         return False, "no `Amount` key"
 
-    if int(amount) != amount:
-        return False, "`Amount` must be int"
+    #if is_intlike(amount):
+    #    return False, "`Amount` must be int"
 
     who = iv['who']
     if who is None:
         return False, "no `Who` key"
 
+    if not 'iid' in iv:
+        return False, "no `iid` key"
     iid = iv['iid']
     if iid is None:
         return False, "no `iid` key"
 
-    if float(amount) != amount:
-        return False, "`amount` nees to be float"
+    if not is_amount(amount):
+        return False, "`amount` needs to be float/numerical"
 
-    if amount <=0 :
-        return False, "`amount` needs to be numerical"
+    if amount <= 0:
+        return False, "`amount` needs to be a positive number"
 
     return True, ""
 
@@ -183,6 +212,7 @@ def invoices_retrieve(invoice_iid):
     # The requested URL was not found on the server.  
 
 
+
 ##########
 import datetime
 ###########
@@ -229,7 +259,11 @@ def new_invoice():
     i,reason = invoice_consistency(new_invoice)
     if not i:
         #TODO: show the reason
-        abort(400)  # invalid
+        #abort(400)  # invalid
+        #################
+        #  Nice: returns error with reason.
+        #################
+        return jsonify({'reason': reason}), 400
 
     invoices.append(new_invoice)
 
