@@ -301,10 +301,25 @@ A tour of possiblities: tour of interviews.
 """
 
 """
+TODO: ...
+
+TODO: make_public_task(task)  cool: separate representations. public/private. (reminds me of the remote/local of original invoices_stats.py)
+"""
+
+"""
 201 is:
 HTTP defines 201 as the code for "Created".
 """
 
+"""
+big TODO:
+
+Proper tests. + fiorm tests: test the forms: follows the REST coventions properly, etc.
+Is really a resource.  e.g. Has the same point.
+CRUD.
+etc.
+(to test is against a standard way? Can we just feed it and it cheks if it is CRUD? It would be nice to do so in C++.)
+"""
 """
 TODO:
 @app.route('/acc/api/v1.0/invoices/<int:task_id>', methods=['PUT'])
