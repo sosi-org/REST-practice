@@ -5,6 +5,7 @@ from flask import jsonify
 from flask import abort
 from flask import request
 
+# api_url = "/acc/api/v1.0"
 
 app = Flask(__name__)
 
@@ -27,114 +28,13 @@ def not_found(error):
 #  LOGIC
 ###################################################################
 
-#db:
-# master list
-invoices = [
-    {'amount': 12, 'who': 1, 'extra': "extra information", 'iid':2},
-    {'amount': 24, 'who': 2, 'iid': 123},
-    {'amount': 32, 'who': "07719", 'iid': 125},
-]
-"""
-Consistency checks:
-each one must have am iid, amount, some who. Other fields are optional.
-"""
+#import data
+from data_example import *
 
-#price? order?
+print(invoices)
+# import data_class:
+from data_operations import *
 
-
-"""
-In-memory acumulated states. (deliberate redundancy, similar to cache.)
-"""
-uinvoices = [
-    {'amount': 12, 'ucid': 10},
-    {'amount': 32, 'ucid': 20},
-]
-
-
-
-#users map
-clients = [
-     #cid, unique_id,  who,  who_id,  person=uniqe_id=ucid: any client_identifier
-    {'cid': 1, 'unique_cid': 10},
-    {'cid': "07719", 'unique_cid': 10},
-    {'cid': 2, 'unique_cid': 20},
-]
-"""
-Consistency checks:
-"""
-
-
-
-
-def represents_int(int_like):
-    # is_int_like
-    try:
-        int(int_like)
-        return True
-    except ValueError:
-        return False
-
-def represents_float(number):
-    try:
-        float(number)
-        return True
-    except ValueError:
-        return False
-
-
-def is_int(int_like):
-    if represents_int(int_like) and int(int_like) == int_like:
-        return True
-    return False
-
-def is_amount(number_like):
-    # TODO: check aomount has 2 decimal points only.
-    if represents_float(number_like) and intfloat(number_like) == number_like:
-        return True
-    return False
-
-def invoice_consistency(iv):
-    """ returns (bool,reason"""
-    amount = iv['amount']
-    if amount is None:
-        return False, "no `Amount` key"
-
-    #if is_intlike(amount):
-    #    return False, "`Amount` must be int"
-
-    who = iv['who']
-    if who is None:
-        return False, "no `Who` key"
-
-    if not 'iid' in iv:
-        return False, "no `iid` key"
-    iid = iv['iid']
-    if iid is None:
-        return False, "no `iid` key"
-
-    if not is_amount(amount):
-        return False, "`amount` needs to be float/numerical"
-
-    if amount <= 0:
-        return False, "`amount` needs to be a positive number"
-
-    return True, ""
-
-def total_consistency():
-    """ Returns (bool, reason) """
-    last_iv = None
-    for iv in invoices:
-        conssnt, reasonnot = invoice_consistency(iv)
-        if not conssnt:
-            return False, "inconsisnency:"+reasonnot
-
-        if last_iv is not None:
-            if not last_iv['iid'] < iv['iid']:
-                return False, "strictly increaing primary key"
-
-        last_iv = iv
-    # TODO: check unique iid (or strictly increasing)
-    return True, ""
 """
 Private. For test purposes only
 """
