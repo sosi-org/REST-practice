@@ -64,40 +64,6 @@ Consistency checks:
 """
 
 
-"""
-API design:
-/acc/api/v1.0/invoices
-/acc/api/v1.0/invoices/2  # person
-/acc/api/v1.0/invoice/<int:invoice_id>
-/acc/api/v1.0/clients  # unique ones
-/acc/api/v1.0/uclient/<who>
-/acc/api/v1.0/mean
-/acc/api/v1.0/sum   #also returns count  (can repeat. n invoie replaces)
-/acc/api/v1.0/median
-/acc/api/v1.0/latest/<ucid>  # latest invoice by that person
-
-/acc/api/v1.0/sum_unique  (one for each person only: his latest)
-
-For now:
-/acc/api/v1.0/invoices
-/acc/api/v1.0/invoice/<int:invoice_id>
-/acc/api/v1.0/sum
-
-? /acc/api/v1.0/clients  # unique
-
-Error codes:
-400  Bad request
-404  Error:             unable to process the request sent by the client due to invalid syntax
-
-
-return 404 in case of resource does not exist(means the url path is wrong)
-return 400 only if the rest call is made with some invalid data (non-existaent users)
-return ?? when a syntax error
-
-empty: return 404.
-
-
-"""
 
 
 def represents_int(int_like):
@@ -186,11 +152,11 @@ def invoices_listall():
     """
     Dumps all `invoices`
     """
-    
+
     #invoices=[]
     #if len(invoices) == 0:
     #    # incorrect usage
-    #    abort(404)  # The requested URL was not found on the server.  
+    #    abort(404)  # The requested URL was not found on the server.
     #    FIXME
 
     return jsonify({'invoices': invoices})
@@ -209,7 +175,7 @@ def invoices_retrieve(invoice_iid):
         if iv['iid'] == invoice_iid:
             return jsonify(iv)
     abort(404)  # does not give more info
-    # The requested URL was not found on the server.  
+    # The requested URL was not found on the server.
 
 
 
@@ -276,62 +242,6 @@ def new_invoice():
     return jsonify({'invoice': new_invoice}), 201  # AHA
 
 
-"""
-TODO: More rigorous validation tests:
-        type(request.json['title']) != unicode
-        type(request.json['done']) is not bool
-        proper numerical tests: Testin None is wrong.
-        no None.
-        A series of tests on "request" before the tests on obj. (Then, tests on the whole thing. Then on the "accumulation" object.)
-
-        what about type check and nitty gritty of "<int:>" field of GET, etc?
-
-
-
-Wny do we test "if not request.json" ?
-Return a reson for everything.
-"""
-
-"""
-Tests: good for forcing unificatin (Externall). reminds me of design of linux.
-
-Why this will become a RESOURCE? anew qualia? (in CS). (qualias, patterns, Concepts(C++14), etc)
-(Will have a/that Qualia. BUt for a reason outsied it. Each of them happns to follow the standard. Like immitating object oriwented without the checks.)
-A tour of possiblities: tour of interviews.
-"""
-
-"""
-TODO: ...
-
-TODO: make_public_task(task)  cool: separate representations. public/private. (reminds me of the remote/local of original invoices_stats.py)
-"""
-
-"""
-201 is:
-HTTP defines 201 as the code for "Created".
-"""
-
-"""
-big TODO:
-
-Proper tests. + fiorm tests: test the forms: follows the REST coventions properly, etc.
-Is really a resource.  e.g. Has the same point.
-CRUD.
-etc.
-(to test is against a standard way? Can we just feed it and it cheks if it is CRUD? It would be nice to do so in C++.)
-"""
-
-"""
-TODO:
-@app.route('/acc/api/v1.0/invoices/<int:task_id>', methods=['PUT'])
-app.route('/acc/api/v1.0/invoices/<int:task_id>', methods=['DELETE'])
-
-authentication / login_necessary
-
-What is WGSI? Why recommended?
-What makes it production?
-"""
 
 if __name__ == '__main__':
     app.run(debug=True)
-
