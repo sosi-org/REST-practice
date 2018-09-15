@@ -5,7 +5,7 @@ from flask import jsonify
 from flask import abort
 from flask import request
 
-# api_url = "/acc/api/v1.0"
+API_ENDPOINT_URL = "/acc/api/v1.0"
 
 app = Flask(__name__)
 
@@ -47,7 +47,7 @@ def consistency():
     return jsonify(?)
 """
 
-@app.route('/acc/api/v1.0/invoices', methods=['GET'])
+@app.route(API_ENDPOINT_URL+'/invoices', methods=['GET'])
 def invoices_listall():
     """
     Dumps all `invoices`
@@ -62,7 +62,7 @@ def invoices_listall():
     return jsonify({'invoices': invoices})
 
 
-@app.route('/acc/api/v1.0/invoices/<int:invoice_iid>', methods=['GET'])
+@app.route(API_ENDPOINT_URL+'/invoices/<int:invoice_iid>', methods=['GET'])
 def invoices_retrieve(invoice_iid):
     """
     """
@@ -85,11 +85,11 @@ import datetime
 
 """
 The URL was defined with a trailing slash so Flask will automatically redirect to the URL with the trailing slash if it was accessed without one.  Make sure to directly send your POST-request to this URL since we can\'t make browsers or HTTP clients redirect with form data reliably or without user interaction.\n\nNote: this exception is only raised in debug mode'<
-'/acc/api/v1.0/invoices/'
+API_ENDPOINT_URL + '/invoices/'
 ->
-'/acc/api/v1.0/invoices'
+API_ENDPOINT_URL + '/invoices'
 """
-@app.route('/acc/api/v1.0/invoices', methods=['POST'])
+@app.route(API_ENDPOINT_URL+'/invoices', methods=['POST'])
 def new_invoice():
     ###################
     # `request` first used. Terrible design.
