@@ -1,5 +1,6 @@
 Flask practice
 
+CircleCI Badge [![CircleCI](https://circleci.com/gh/sosi-org/REST-practice.svg?style=svg)](https://circleci.com/gh/sosi-org/REST-practice)
 
 STEPS: [1]
 
