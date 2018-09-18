@@ -7,6 +7,9 @@ from flask import request
 
 API_ENDPOINT_URL = "/acc/api/v1.0"
 
+#import flask
+#print("flask.__version__", flask.__version__) # 1.0.2
+
 app = Flask(__name__)
 
 @app.route('/')
