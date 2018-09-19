@@ -1,0 +1,7 @@
+* run app in WSGI
+* run app in production mode
+* Locally install circleci
+* install react stack on it
+* gulp or similar on circlesci
+* deploy on digitalocean from early on
+* live deploy on AWS
