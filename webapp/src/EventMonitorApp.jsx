@@ -90,8 +90,8 @@ ws.onmessage = function (ws_event) {
         return message_li;
     })(event_content);
 
-    document.querySelector('#messages_ul')
-    var messages = document.getElementsByTagName('ul')[0];
+
+    var messages = document.querySelector('#messages_ul');
     messages.appendChild(message2);
 };
 document.body.appendChild(messages);
