@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 
 
-import React from 'react';
+//import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class Message extends React.Component {
@@ -13,7 +13,11 @@ export default class Message extends React.Component {
 }
 
 Message.propTypes = {
-  message: PropTypes.string.isRequired
+  //Failed prop type: The prop `message` is marked as required in `Message`, but its value is `undefined`.
+  //message: PropTypes.string.isRequired
+
+  // https://reactjs.org/docs/typechecking-with-proptypes.html
+  timesamps_stack: PropTypes.string.isRequired
 }
 
 class EventMonitorApp extends React.Component {
@@ -26,7 +30,7 @@ class EventMonitorApp extends React.Component {
     }
 }
 
-ReactDOM.render(<EventMonitorApp />, document.querySelector('#content'));
+ReactDOM.render(<EventMonitorApp />, document.querySelector('#ra-content'));
 
 /*
 names:
