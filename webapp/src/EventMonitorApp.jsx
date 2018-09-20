@@ -31,6 +31,7 @@ class EventMonitorApp extends React.Component {
 }
 
 ReactDOM.render(<EventMonitorApp />, document.querySelector('#ra-content'));
+console.log("DOM",document.querySelector('#ra-content'));
 
 /*
 names:
@@ -89,6 +90,7 @@ ws.onmessage = function (ws_event) {
         return message_li;
     })(event_content);
 
+    document.querySelector('#messages_ul')
     var messages = document.getElementsByTagName('ul')[0];
     messages.appendChild(message2);
 };
