@@ -6,25 +6,26 @@ import ReactDOM from 'react-dom';
 //import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class Message extends React.Component {
+// EventBasket
+export default class EventBasket extends React.Component {
   render() {
-    return <label>{ this.props.timesamps_stack }</label>;
+    return <label>{ this.props.timesampsstack }</label>;
   }
 }
 
-Message.propTypes = {
-  //Failed prop type: The prop `message` is marked as required in `Message`, but its value is `undefined`.
+EventBasket.propTypes = {
+  //Failed prop type: The prop `message` is marked as required in `EventBasket`, but its value is `undefined`.
   //message: PropTypes.string.isRequired
 
   // https://reactjs.org/docs/typechecking-with-proptypes.html
-  timesamps_stack: PropTypes.string.isRequired
+  timesampsstack: PropTypes.string.isRequired
 }
 
 class EventMonitorApp extends React.Component {
     render() {
         return (
             <div>
-            <Message timesamps_stack='Hello React'></Message>
+            <EventBasket timesampsstack='Hello React'></EventBasket>
             </div>
         );
     }
@@ -36,11 +37,23 @@ console.log("DOM",document.querySelector('#ra-content'));
 /*
 names:
     webapp_collector
-
+    Message
+    EventBasket
+    MessageBucket
+    Bucket
+    EventBasket
 */
 
 
-
+/*
+class EventBasket extends React.Component  {
+    constructor(props) {
+    }
+}
+EventBasket.propTypes = {
+  timesamps_stack: PropTypes.string.isRequired
+}
+*/
 
 
 var messages = document.createElement('ul');
@@ -90,9 +103,13 @@ ws.onmessage = function (ws_event) {
         return message_li;
     })(event_content);
 
+    //ReactDOM.render(messages, document.querySelector('#messages_ul'))
+    //var messages = document.querySelector('#messages_ul');
+    //messages.appendChild(message2);
 
-    var messages = document.querySelector('#messages_ul');
-    messages.appendChild(message2);
+    console.log("lala");
+    //ReactDOM.render(
+    ReactDOM.render(<EventBasket timesampsstack={""+"message2"} />, document.querySelector('#messages_ul'));
 };
 document.body.appendChild(messages);
 console.log("ready.");
