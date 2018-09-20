@@ -5,7 +5,11 @@ from flask import jsonify
 from flask import abort
 from flask import request
 
+import client_notifier
+
 API_ENDPOINT_URL = "/acc/api/v1.0"
+
+
 
 #import flask
 #print("flask.__version__", flask.__version__) # 1.0.2
@@ -127,6 +131,7 @@ def new_invoice():
 
     i,reason = invoice_consistency(new_invoice)
     if not i:
+        # TODO: inconsistency exception? No.not a good idea. inconsitencies are more common than that.
         #TODO: show the reason
         #abort(400)  # invalid
         #################
@@ -134,7 +139,34 @@ def new_invoice():
         #################
         return jsonify({'reason': reason}), 400
 
+    # Actual integration
+    # in memory
     invoices.append(new_invoice)
+
+    #Then: (next in chain)
+    # Todo: make a pipeline. Maybe using RxJS?
+    #client_notifier # is the output side of this pipeline
+    #client_notifier.notify_newdata(extract_notify(new_invoice))
+    client_notifier.notify_newdata_arrival(single_invoice_notify(new_invoice))
+    #client_notifier.notify_newintegration()  # notifies the update of the integration. Second fanout branch.
+
+    #branch out:
+    # send another copy to quque, which in turn sends two to database, etc.
+
+    """
+    1. In memory accumulation
+    2. Integration service.
+    3. Notifier to client (fast route)
+    4. Database accumulation. (1. PostGres 2.Mongo 3.GIS 4. etc) x cluster factor x interleave.
+    5. Queue (for other uses?)
+    6. Log!
+
+
+    7. UDP?
+    8. 0MQ
+    9. Boradcast to vicinity (subscribe?)
+    10. RxJS chain. Observer pattern.
+    """
 
     #############
     # Not directly returned.
@@ -144,7 +176,13 @@ def new_invoice():
     #       forgot jsonify
     return jsonify({'invoice': new_invoice}), 201  # AHA
 
+# logic separate from app.py
+#class ClientNotifier
+    #client_notifier.notify_newdata_arrival
 
+def single_invoice_notify(new_invoice):
+    # extract_notify()
+    return new_invoice
 
 if __name__ == '__main__':
     app.run(debug=True)
