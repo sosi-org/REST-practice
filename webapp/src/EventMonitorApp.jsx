@@ -48,7 +48,7 @@ export class TimestampList1 extends React.Component {
 
         // why this.state does not work? this.probs works
         let tslist = this.props.tslist;
-        console.log(tslist);
+        //console.log(tslist);
         let key = 0;
         return tslist.map(ts=>{
             ++key;
@@ -144,7 +144,7 @@ class EventMonitorApp extends React.Component {
     }
     */
     addDrip(new_drip1) {
-        console.log("added drip", new_drip1);
+        //console.log("added drip", new_drip1);
         //this.setState({ drips: [...this.state.chats, data], test: '' });
         var old_drips = this.state.drips;
         var new_drips = old_drips.slice(0); //old_drip.slice(0);
