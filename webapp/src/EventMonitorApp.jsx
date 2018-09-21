@@ -42,7 +42,8 @@ export class TimestampList1 extends React.Component {
         }
         function date_formatter(d) {
             //return d.getYear()+"/"+d.getMonth()+"/"+d.getDay();
-            return left0(d.getHours())+""+d.getMinutes()+":"+left0(d.getSeconds()) ; //+left0(d.getMilliseconds());
+            return left0(d.getHours())+""+d.getMinutes()+":"+left0(d.getSeconds());
+            //+left0(d.getMilliseconds());
         }
 
         // why this.state does not work? this.probs works
@@ -53,9 +54,7 @@ export class TimestampList1 extends React.Component {
             ++key;
             const css = {backgroundColor: '#eeeeff', fontSize: 9};
             return (
-            <span key={key}>(<span style={css}> {
-                  ts?date_formatter(new Date(ts)):"-"
-               }</span>)&nbsp;</span>
+                <span key={key}>(<span style={css}> {ts?date_formatter(new Date(ts)):"-"}</span>)&nbsp;</span>
            );
        });
     }
