@@ -75,12 +75,13 @@ class EventMonitorApp extends React.Component {
         let that = this;
         ws.onmessage = function (ws_event) {
             //console.log("onmessage", ws_event);
-            let arrival_time = (new Date()).getTime();
+            let arrival_time = (new Date())+"";
             let event_content = JSON.parse(ws_event.data);
             //console.log("received event from Queue", ws_event, event_content);
             event_content.timestamps.push(ws_event.timestamp);
             event_content.timestamps.push(arrival_time);
 
+            //console.log(event_content["timestamps"]);  array of strings
             //console.log("ws packet content str", ws_event.data);
             //console.log("ws packet content", event_content);
             // assert
@@ -113,7 +114,7 @@ class EventMonitorApp extends React.Component {
         //this.setState({ drips: ["drip A", "drip B"] });
         // this.handleTextChange = this.handleTextChange.bind(this);
         //console.log(this.state);
-        console.log(new_drips);
+        //console.log(new_drips);
 
         // "setState() enqueues changes to the component state and tells React that this component and its children need to be re-rendered with the updated state."
         // "Think of setState() as a request rather than an immediate command to update the component."
@@ -123,16 +124,29 @@ class EventMonitorApp extends React.Component {
 
     render() {
         //<EventBasket timesampsstack='Hello React'></EventBasket>
+        //if (this.state.drips.length > 0)
+        //    console.log("-----", this.state.drips[0].timestamps+"");
+        function date_formatter(d) {
+            //return d.getYear()+"/"+d.getMonth()+"/"+d.getDay();
+            return d.getHours()+""+d.getMinutes()+":"+d.getSeconds();
+        }
         var k = 0;
         return (
+            // shows onlly last 5 items
             // style={"background-color": "#eeeeff";}
+            // shadow: https://www.codementor.io/michelre/using-box-shadow-to-construct-a-border-ex0rpxvng
             <div className="ema">
-                <h1>{this.props.channel}</h1>
-                <ul>
-                    {this.state.drips.map(drip =>
+                Recent invoices for <i>{this.props.channel}</i>:
+                <ul style={{boxShadow: '3px 3px 5px 6px #ccc', width: '20em'}}>
+                    {this.state.drips.slice(-9).map(drip =>
                         // Warning: Each child in an array or iterator should have a unique "key" prop.
                         // <li key={drip.username}>
-                        <li key={++k}>£{drip.amount}: {drip.timestamps} ({drip.username}) </li>
+                        // {drip.timestamps} is converted into string: drip.timestamps+""
+                        //span: className="TinyDate"
+                        // CSS
+                        <li key={++k}><b>£{drip.amount}</b>: {drip.timestamps.map(ts=>{return <span>(<span  style={{backgroundColor: '#eeeeff', fontSize: 9}} >{
+                                date_formatter(ts?new Date(ts):new Date())
+                            }</span>)&nbsp;</span>;})} ({drip.username}) </li>
                     )}
                 </ul>
             </div>
@@ -172,79 +186,8 @@ EventBasket.propTypes = {
 */
 
 
-function setup_ws(ws_address, messages) {
 
-var ws = new WebSocket(ws_address);
-// How to catch error: https://stackoverflow.com/questions/25779831/how-to-catch-websocket-connection-to-ws-xxxnn-failed-connection-closed-be
-
-ws.onopen = function() {
-      console.log('connected');
-    };
-ws.onerror = function(evt) {
-    console.log('ws normal error: ', evt, evt.type);  // evt.type is 'error'  typeof evt.type is string
-    var moreinfo = evt.target.url;
-    console.log("moreinfo", moreinfo);
-    document.getElementById("errors-div").innerHTML = "Cannot connect: " + moreinfo;
-     //if (ws.readyState == 1) { }
-   };
-
-ws.onmessage = function (ws_event) {
-    let received_ts = (new Date()).getTime();
-    let event_content = JSON.parse(ws_event.data);
-    console.log("received event from Queue", ws_event, event_content);
-    event_content.timestamps.push(ws_event.timestamp); // new Date()
-    event_content.timestamps.push(received_ts); //
-
-
-    let message2 = ((event_)=>{
-        var message_li = document.createElement('li');
-            //content = document.createTextNode(event_.data);
-        var timestamps_dom = document.createElement('ol');
-        let count = 0;
-        event_["timestamps"].forEach( (ts)=>{
-            timestamps_dom.appendChild(document.createTextNode(count+":"+ts+" "));
-            ++count;
-        } );
-        /* Ugly old JavaScript
-        for (let tsi in event_["timestamps"]) {
-            let ts = event_["timestamps"][tsi];
-        }
-        */
-        //console.log("count", count); // 3
-
-        //document.createTextNode(event_.timestamps)
-        //message_li.appendChild(content);
-        message_li.appendChild(document.createTextNode("Timestamps:"));
-        message_li.appendChild(timestamps_dom);
-        return message_li;
-    })(event_content);
-
-    //ReactDOM.render(messages, document.querySelector('#messages_ul'))
-    //var messages = document.querySelector('#messages_ul');
-    messages.appendChild(message2);
-
-    //ReactDOM.render(
-    //ReactDOM.render(<EventBasket timesampsstack={""+"message2"} />, document.querySelector('#messages_ul'));
-    // React.createElement() learnt from: https://codepen.io/antonietta/pen/KzxxWN?editors=0010#0
-    // ---> Warning: React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: <EventBasket />. Did you accidentally export a JSX literal instead of a component?
-    /*
-    React.createElement(
-        //<EventBasket timesampsstack={""+"message2"} />,
-        //document.querySelector('#messages_ul')
-        EventBasket,
-        {"timesampsstack": ""+"message2"},
-        event_content
-    );
-    */
-    //React.createElement(App, null)
-
-};
-}
-//} catch(except) {
-//document.getElementById("errors-div").innerHTML = "Cannot connect. "+err.message;
-//}
-
-ReactDOM.render(<EventMonitorApp channel="hoho"/>, document.querySelector('#ra-content'));
+ReactDOM.render(<EventMonitorApp channel="channel-h"/>, document.querySelector('#ra-content'));
 console.log("DOM",document.querySelector('#ra-content'));
 
 /*

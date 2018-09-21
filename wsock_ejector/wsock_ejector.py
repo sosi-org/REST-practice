@@ -13,7 +13,8 @@ MOCK_MODE = True
 async def time(websocket, path):
     while True:
         now = datetime.datetime.utcnow().isoformat() + 'Z'
-        data = {'timestamps': [now], 'username': "sosi", 'amount': float(int(random.random() * 15.0 *100))/100.0}
+        random_money = float(int(random.random() * 15.0 *100))/100.0
+        data = {'timestamps': [now], 'username': "sosi", 'amount': random_money}
         await websocket.send(json.dumps(data))
         await asyncio.sleep(random.random() * 3)
 
