@@ -48,11 +48,16 @@ export class TimestampList1 extends React.Component {
         // why this.state does not work? this.probs works
         let tslist = this.props.tslist;
         console.log(tslist);
-        return tslist.map(ts=>{return (
-            <span>(<span  style={{backgroundColor: '#eeeeff', fontSize: 9}}> {
+        let key = 0;
+        return tslist.map(ts=>{
+            ++key;
+            const css = {backgroundColor: '#eeeeff', fontSize: 9};
+            return (
+            <span key={key}>(<span style={css}> {
                   ts?date_formatter(new Date(ts)):"-"
                }</span>)&nbsp;</span>
-           )});
+           );
+       });
     }
 }
 
