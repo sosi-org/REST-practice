@@ -27,6 +27,42 @@ EventBasket.propTypes = {
   timesampsstack: PropTypes.string.isRequired
 }
 
+
+// Only one default export allowed per module.  `export default class ...`
+export class TimestampList1 extends React.Component {
+    constructor(props) {
+        super(props);
+        /*this.state = {
+            ts: ''
+        };*/
+    }
+    render() {
+        function left0(i) {
+            return (("000"+i).slice(-2));
+        }
+        function date_formatter(d) {
+            //return d.getYear()+"/"+d.getMonth()+"/"+d.getDay();
+            return left0(d.getHours())+""+d.getMinutes()+":"+left0(d.getSeconds()) ; //+left0(d.getMilliseconds());
+        }
+
+        // why this.state does not work? this.probs works
+        let tslist = this.props.tslist;
+        console.log(tslist);
+        return tslist.map(ts=>{return (
+            <span>(<span  style={{backgroundColor: '#eeeeff', fontSize: 9}}> {
+                  ts?date_formatter(new Date(ts)):"-"
+               }</span>)&nbsp;</span>
+           )});
+    }
+}
+
+/*
+TimestampList1.propTypes = {
+  ts: PropTypes.string.isRequired
+}
+*/
+
+
 class EventMonitorApp extends React.Component {
 
     constructor(props) {
@@ -126,13 +162,6 @@ class EventMonitorApp extends React.Component {
         //<EventBasket timesampsstack='Hello React'></EventBasket>
         //if (this.state.drips.length > 0)
         //    console.log("-----", this.state.drips[0].timestamps+"");
-        function left0(i) {
-            return (("000"+i).slice(-2));
-        }
-        function date_formatter(d) {
-            //return d.getYear()+"/"+d.getMonth()+"/"+d.getDay();
-            return left0(d.getHours())+""+d.getMinutes()+":"+left0(d.getSeconds()) ; //+left0(d.getMilliseconds());
-        }
         var k = 0;
         return (
             // shows onlly last 5 items
@@ -147,9 +176,9 @@ class EventMonitorApp extends React.Component {
                         // {drip.timestamps} is converted into string: drip.timestamps+""
                         //span: className="TinyDate"
                         // CSS
-                        <li key={++k}><b>£{drip.amount}</b>: {drip.timestamps.map(ts=>{return <span>(<span  style={{backgroundColor: '#eeeeff', fontSize: 9}} >{
-                                date_formatter(ts?new Date(ts):new Date())
-                            }</span>)&nbsp;</span>;})} -- <i>{drip.username}</i> </li>
+                        <li key={++k}><b>£{drip.amount}</b>:
+                            {(<TimestampList1 tslist={drip.timestamps}/>)} -- <i>{drip.username}</i> </li>
+                            //{drip.timestamps.map(ts=>{return (<TimestampList1 ts={ts}/>)})} -- <i>{drip.username}</i> </li>
                     )}
                 </ul>
             </div>
