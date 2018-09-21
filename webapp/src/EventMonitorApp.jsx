@@ -126,9 +126,12 @@ class EventMonitorApp extends React.Component {
         //<EventBasket timesampsstack='Hello React'></EventBasket>
         //if (this.state.drips.length > 0)
         //    console.log("-----", this.state.drips[0].timestamps+"");
+        function left0(i) {
+            return (("000"+i).slice(-2));
+        }
         function date_formatter(d) {
             //return d.getYear()+"/"+d.getMonth()+"/"+d.getDay();
-            return d.getHours()+""+d.getMinutes()+":"+d.getSeconds();
+            return left0(d.getHours())+""+d.getMinutes()+":"+left0(d.getSeconds()) ; //+left0(d.getMilliseconds());
         }
         var k = 0;
         return (
@@ -137,7 +140,7 @@ class EventMonitorApp extends React.Component {
             // shadow: https://www.codementor.io/michelre/using-box-shadow-to-construct-a-border-ex0rpxvng
             <div className="ema">
                 Recent invoices for <i>{this.props.channel}</i>:
-                <ul style={{boxShadow: '3px 3px 5px 6px #ccc', width: '20em'}}>
+                <ul style={{boxShadow: '3px 3px 5px 6px #ccc', width: '25em'}}>
                     {this.state.drips.slice(-9).map(drip =>
                         // Warning: Each child in an array or iterator should have a unique "key" prop.
                         // <li key={drip.username}>
@@ -146,7 +149,7 @@ class EventMonitorApp extends React.Component {
                         // CSS
                         <li key={++k}><b>£{drip.amount}</b>: {drip.timestamps.map(ts=>{return <span>(<span  style={{backgroundColor: '#eeeeff', fontSize: 9}} >{
                                 date_formatter(ts?new Date(ts):new Date())
-                            }</span>)&nbsp;</span>;})} ({drip.username}) </li>
+                            }</span>)&nbsp;</span>;})} -- <i>{drip.username}</i> </li>
                     )}
                 </ul>
             </div>
