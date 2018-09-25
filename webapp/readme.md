@@ -13,8 +13,14 @@ The packets of data (here "Drips", containing `Invoice`s) sent by the WebSockets
 
 Data Flow:
 
-Queue(to be implemented) &rarr; →
-Python (fetch from queue)-> WebSocket (server) -> Websocket (browser; via `onmessage()`) -> React (state; via `setState()`) -> React JSX `render()`.
+(Queue &rarr; →)
+Python (fetch from queue) &rarr;
+WebSocket (server) &rarr;
+Websocket (browser; via `onmessage()`) &rarr;
+React (state; via `setState()`) &rarr;
+React JSX `render()`.
+
+(The Queue is to be implemented.
 
 See also:
 [1] https://github.com/krasimir/react-bare-minimum
