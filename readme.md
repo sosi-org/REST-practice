@@ -77,15 +77,71 @@ wsock_ejector ---ws--->  react app (browser)
 * Secure WebSockets [TODO]
 
 ## Terms
+### Concepts
 * WebSocket Infolets
 * Droplet
-* channel-h
+* channel
+* drip
+* EventBasket
 
-* Processes:
+### Domain/Instance (business logic)
+* Invoice: WebSocket Infolets
+* `channel-h`: Channel
+* `ra-content`: The board up price updates ("Recent invoices for" channel)
+* drip: `{username, amount, timestamps}`
+* `state.drips`
+* `state`
+* "EventMonitorApp" has properties: `channel` and `drips`
+
+* TimestampList1
+* tslist
+
+* `EventBasket` (React component)
+* timesampsstack
+
+* `React.Component`s:
+   * EventBasket
+   * TimestampList1
+   * EventMonitorApp
+
+* `React.Component`s:
+   * `EventBasket`
+        * properties: `timesampsstack`
+        * state: -
+   * `TimestampList1`
+        * properties: `tslist`
+        * state
+   * `EventMonitorApp`
+        * properties: `channel`
+        * state:
+
+
+
+### Processes:
    * App
    * WebApp (and its server)
    * test (curl)
    * test (python)
+
+### Property versus state:
+* **Property** is set from outside (eg by (DOM) parent). It is given to the component. Set "for" the component (from outside). It can be a javascript object. Is const per instance of component. (Hence, if props is changed also conesquently, `render()` is called again. is Slow. You can have a function (lambda) as a property. also onClick, onInvalide, etc. (Similar to html attributes.)
+
+* **State** is variable (time-varying). is fast. Render is called when state is changed.
+
+Can bubble up.
+
+|  property               |       state     |
+|:------------------------|----------------:|
+| is slow                 | is fast         |
+| is hard                 | is soft         |
+| set from outside        | set from inside |
+| can be function         | -               |
+| effect during instantiation             | triggers `render()`     |
+| changable only at constructor time      | changable               |
+| component doesn't have control over it  | has control over it     |
+| one way change                          | changed from inside too |
+| similar to process' envs                | program state           |
+| similar to function args                | similar to function local variables |
 
 ## Change log:
 * Version 1: As it was on 25 sept 2018 before LBG - [branch: pre-lbg-as-of-25-sep-2018](https://github.com/sosi-org/REST-practice/tree/pre-lbg-as-of-25-sep-2018)
