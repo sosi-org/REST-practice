@@ -30,3 +30,6 @@ References:
 
 ### Some day:
 * Secure WebSockets [TODO]
+
+## Change log:
+* Version 1: As it was on 25 sept 2018 before LBG - [branch: pre-lbg-as-of-25-sep-2018](https://github.com/sosi-org/REST-practice/tree/pre-lbg-as-of-25-sep-2018)
