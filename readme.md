@@ -5,6 +5,9 @@ CircleCI Badge [![CircleCI](https://circleci.com/gh/sosi-org/REST-practice.svg?s
 
 ## How to
 ### Setup-I
+
+React <-- WebSocket
+
 STEPS: [1]
 #### Step 1
 ```bash
@@ -46,7 +49,7 @@ open http://127.0.0.1:8000/webapp.html
 #### Setup 1:
 Processes:
 1. `python ./app.py`
-2. ``
+2. ` `
 3. `bash curl_tests.sh`
 4. `python wsock_ejector/wsock_ejector.py`
 
