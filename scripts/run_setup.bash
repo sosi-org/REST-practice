@@ -89,6 +89,7 @@ source $REPO_ROOT/temp/$VENV_NAME/bin/activate
 pip install -r requirements.txt
 # Output:
 # Successfully installed Jinja2-3.1.2 MarkupSafe-2.1.1 Werkzeug-2.2.2 click-8.1.3 flask-1.0.2 itsdangerous-2.1.2 websockets-10.3
+pip freeze  # just show packages
 
 echo "source $REPO_ROOT/temp/$VENV_NAME/bin/activate"
 

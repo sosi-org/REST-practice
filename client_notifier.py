@@ -14,8 +14,10 @@ import websockets
 def notify_newdata_arrival(new_invoice_event):
     pass
 
-
+"""
+Why?
 qq = with websockets.connect('ws://localhost:8765') as websocket:
+"""
 
 """
 import asyncio

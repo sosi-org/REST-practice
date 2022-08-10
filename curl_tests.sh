@@ -1,3 +1,4 @@
+set -eux
 
 # man curl
 #

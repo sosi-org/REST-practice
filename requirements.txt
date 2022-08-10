@@ -1,4 +1,5 @@
 # pip install -r requirements.txt
 #flask 1.0.2
-flask==1.0.2
-websockets
+#flask==1.0.2
+flask # installs: Flask==2.2.2
+websockets # installs: websockets==10.3
