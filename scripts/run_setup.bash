@@ -83,13 +83,14 @@ export VENV_PACKAGES="$REPO_ROOT/temp/$VENV_NAME/lib/$PYTHON_VER/site-packages"
 
 echo "Main script"
 
-echo "source $REPO_ROOT/temp/$VENV_NAME/bin/activate"
 
 source $REPO_ROOT/temp/$VENV_NAME/bin/activate
 
 pip install -r requirements.txt
+# Output:
+# Successfully installed Jinja2-3.1.2 MarkupSafe-2.1.1 Werkzeug-2.2.2 click-8.1.3 flask-1.0.2 itsdangerous-2.1.2 websockets-10.3
 
-# Output: Successfully installed Jinja2-3.1.2 MarkupSafe-2.1.1 Werkzeug-2.2.2 click-8.1.3 flask-1.0.2 itsdangerous-2.1.2
+echo "source $REPO_ROOT/temp/$VENV_NAME/bin/activate"
 
 echo 'fine'
 exit

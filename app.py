@@ -1,4 +1,6 @@
-#!myflask/bin/python3
+#!python
+# !./temp/p3-for-me/bin/python
+
 from flask import Flask
 
 from flask import jsonify
