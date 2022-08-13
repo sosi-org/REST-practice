@@ -63,32 +63,52 @@ wsock_ejector ---ws--->  react app (browser)
 <!--  https://medium.com/tenxor/how-to-generate-a-sequence-diagram-within-markdown-using-js-sequence-diagram-and-mkdocs-91dd4fe0b8fb -->
 <!-- https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/ -->
 
-```mermaid
-sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts <br/>prevail!
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
-```
-```mermaid
-sequenceDiagram
-    participant dotcom
-    participant iframe
-    participant viewscreen
-    dotcom->>iframe: loads html w/ iframe url
-    iframe->>viewscreen: request template
-    viewscreen->>iframe: html & javascript
-    iframe->>dotcom: iframe ready
-    dotcom->>iframe: set mermaid data on iframe
-    iframe->>iframe: render mermaid
-```
 
+```mermaid
+sequenceDiagram
+    # from https://towardsdev.com/diagrams-directly-in-markdown-with-5-lines-of-code-7a3182baa484
+    participant WebsocketServer
+    participant ReactApp
+    participant FlaskServer
+    Note left of WebsocketServer: started
+    Note right of ReactApp: started or<br/>refreshed
+
+    ReactApp->>WebsocketServer: connect
+    loop Healthcheck
+        WebsocketServer->>ReactApp: invoice
+        WebsocketServer->>ReactApp: invoice
+        WebsocketServer->>ReactApp: invoice
+        WebsocketServer-->>ReactApp: ...
+        # WebsocketServer->>WebsocketServer: sends invoices
+    end
+    Note right of FlaskServer: a <br/>b
+    ReactApp-->>FlaskServer: (not implemented)
+```
+<!--
+vscode plugins used:
+
+Name: Markdown Preview Mermaid Support
+Id: bierner.markdown-mermaid
+Description: Adds Mermaid diagram and flowchart support to VS Code's builtin markdown preview
+Version: 1.14.3
+Publisher: Matt Bierner
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid
+
+Name: Mermaid Preview
+Id: vstirbu.vscode-mermaid-preview
+Description: Previews Mermaid diagrams in Visual Studio Code
+Version: 1.6.3
+Publisher: Vlad Stirbu
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=vstirbu.vscode-mermaid-preview
+
+Name: Mermaid Markdown Syntax Highlighting
+Id: bpruitt-goddard.mermaid-markdown-syntax-highlighting
+Description: Markdown syntax support for the Mermaid charting language
+Version: 1.4.0
+Publisher: Brian Pruitt-Goddard
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting
+
+-->
 ## References:
 [1]  https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
 [2] [krasimir/react-bare-minimum](https://github.com/krasimir/react-bare-minimum) and related [post](https://krasimirtsonev.com/blog/article/The-bare-minimum-to-work-with-React) ...
