@@ -2,6 +2,7 @@
 
 CircleCI Badge [![CircleCI](https://circleci.com/gh/sosi-org/REST-practice.svg?style=svg)](https://circleci.com/gh/sosi-org/REST-practice)
 
+This is a very old project from 2018. Some practices are deprecated now.
 
 ## How to
 ### Setup-I
@@ -56,6 +57,36 @@ Processes:
 ```
 wsock_ejector ---ws--->  react app (browser)
 ```
+<!-- see https://github.com/sohale/point-process-simple-example/blob/master/caption.md -->
+<!--- failed: -->
+<img src="http://yuml.me/diagram/scruffy/class/[Input]EPSP -.->[State]λ -.-^[Spikes {bg:orange}]" />
+<!--  https://medium.com/tenxor/how-to-generate-a-sequence-diagram-within-markdown-using-js-sequence-diagram-and-mkdocs-91dd4fe0b8fb -->
+<!-- https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/ -->
+```mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail!
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+```
+```mermaid
+sequenceDiagram
+    participant dotcom
+    participant iframe
+    participant viewscreen
+    dotcom->>iframe: loads html w/ iframe url
+    iframe->>viewscreen: request template
+    viewscreen->>iframe: html & javascript
+    iframe->>dotcom: iframe ready
+    dotcom->>iframe: set mermaid data on iframe
+    iframe->>iframe: render mermaid
+```
 
 ## References:
 [1]  https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
@@ -86,7 +117,8 @@ wsock_ejector ---ws--->  react app (browser)
 
 ### Domain/Instance (business logic)
 * Invoice: WebSocket Infolets
-* `channel-h`: Channel
+* `channel-h`: Channel ( username or vicinity whom we are subscribed to. Channel in the sense of Kafka. Filter.)
+   *   Boradcast to vicinity?
 * `ra-content`: The board up price updates ("Recent invoices for" channel)
 * drip: `{username, amount, timestamps}`
 * `state.drips`
@@ -123,6 +155,11 @@ wsock_ejector ---ws--->  react app (browser)
    * test (curl)
    * test (python)
 
+## Learning
+* See [my old react notes](https://github.com/sohale/cs-glossaries/blob/master/js/react.md)
+* See this [sosi-org/REST-practice](https://github.com/sosi-org/REST-practice)
+* See [Story in Audiotour at StrikingThirteen](https://github.com/StrikingThirteen/Audiotour-Sandbox/blob/master/spa/hello-world/src/Story.js)
+
 ### Property versus state:
 * **Property** is set from outside (eg by (DOM) parent). It is given to the component. Set "for" the component (from outside). It can be a javascript object. Is const per instance of component. (Hence, if props is changed also conesquently, `render()` is called again. is Slow. You can have a function (lambda) as a property. also onClick, onInvalide, etc. (Similar to html attributes.)
 
@@ -142,6 +179,7 @@ Can bubble up.
 | one way change                          | changed from inside too |
 | similar to process' envs                | program state           |
 | similar to function args                | similar to function local variables |
+
 
 ## Change log:
 * Version 1: As it was on 25 sept 2018 before LBG - [branch: pre-lbg-as-of-25-sep-2018](https://github.com/sosi-org/REST-practice/tree/pre-lbg-as-of-25-sep-2018)

@@ -82,7 +82,12 @@ class EventMonitorApp extends React.Component {
 
     }
 
+    // called after constructor -> render -> native-DOM-magic -> componentDidMount()
     componentDidMount() {
+        /*
+        See diagram:
+        https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+        */
         const channel = "bgt";
         this.setState({ channel });
 
@@ -98,12 +103,14 @@ class EventMonitorApp extends React.Component {
     }
 
     setupWebsocket(ws_address) {
+        /* connects to python websocket server */
         var ws = new WebSocket(ws_address);
 
         ws.onopen = function() {
             console.log('connected', ws);
         };
         ws.onerror = function(evt) {
+            console.error('You need to run a websocket server (that sends data to this webapp): e.g., `python wsock_ejector/wsock_ejector.py`');
             console.log('ws normal error: ', evt, evt.type);  // evt.type is 'error'  typeof evt.type is string
             var moreinfo = evt.target.url;
             console.log("moreinfo", moreinfo);
@@ -114,6 +121,7 @@ class EventMonitorApp extends React.Component {
 
         let that = this;
         ws.onmessage = function (ws_event) {
+            // A message received from WebSocket server:
             //console.log("onmessage", ws_event);
             let arrival_time = (new Date())+"";
             let event_content = JSON.parse(ws_event.data);
@@ -130,6 +138,10 @@ class EventMonitorApp extends React.Component {
                 amount: event_content.amount,
                 timestamps: event_content["timestamps"].map(ts => {return ts;}),
             });
+
+            // failed. how to send something back?
+            // ws.send('oggi')
+            ws.write('okokok')
         }
     }
 
@@ -222,9 +234,9 @@ EventBasket.propTypes = {
 */
 
 
-
-ReactDOM.render(<EventMonitorApp channel="channel-h"/>, document.querySelector('#ra-content'));
-console.log("DOM",document.querySelector('#ra-content'));
+const dom_element = document.querySelector('#ra-content');
+ReactDOM.render(<EventMonitorApp channel="channel-h"/>, dom_element);
+console.log("DOM",dom_element);
 
 /*
 var messages_dom = document.createElement('ul');
