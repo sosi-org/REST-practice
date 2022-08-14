@@ -60,9 +60,17 @@ wsock_ejector ---ws--->  react app (browser)
 <!-- see https://github.com/sohale/point-process-simple-example/blob/master/caption.md -->
 <!--- failed: -->
 <img src="http://yuml.me/diagram/scruffy/class/[invoice]-.->[reactApp] -.-^[? flask server? {bg:orange}]" />
-<!--  https://medium.com/tenxor/how-to-generate-a-sequence-diagram-within-markdown-using-js-sequence-diagram-and-mkdocs-91dd4fe0b8fb -->
-<!-- https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/ -->
+<!--
+Best:
+https://mermaid-js.github.io/mermaid/#/
 
+Also see:
+
+https://medium.com/tenxor/how-to-generate-a-sequence-diagram-within-markdown-using-js-sequence-diagram-and-mkdocs-91dd4fe0b8fb
+
+https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/
+
+-->
 
 ```mermaid
 sequenceDiagram
