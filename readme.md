@@ -60,6 +60,7 @@ wsock_ejector ---ws--->  react app (browser)
 <!-- see https://github.com/sohale/point-process-simple-example/blob/master/caption.md -->
 <!--- failed: -->
 <img src="http://yuml.me/diagram/scruffy/class/[invoice]-.->[reactApp] -.-^[? flask server? {bg:orange}]" />
+
 <!--
 Best:
 https://mermaid-js.github.io/mermaid/#/
