@@ -78,8 +78,8 @@ sequenceDiagram
     participant WebsocketServer
     participant ReactApp
     participant FlaskServer
-    Note left of WebsocketServer: started
-    Note right of ReactApp: started or<br/>refreshed
+    Note left of WebsocketServer: started→
+    Note right of ReactApp: ←started or<br/>refreshed
 
     ReactApp->>WebsocketServer: connect
     loop Healthcheck
@@ -89,7 +89,7 @@ sequenceDiagram
         WebsocketServer-->>ReactApp: ...
         # WebsocketServer->>WebsocketServer: sends invoices
     end
-    Note right of FlaskServer: a <br/>b
+    Note right of FlaskServer: ←a <br/>b
     ReactApp-->>FlaskServer: (not implemented)
 ```
 <!--
